@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>💝 Happy Valentine's Day</title>
+  <link rel="shortcut icon" type="image/png" href="img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Outfit:wght@300;400;600&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ─── Reset ─── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --rose: #e84393;
+      --deep-rose: #d63384;
+      --blush: #ffeef8;
+      --dark: #1a0011;
+      --card-bg: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.15);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: var(--dark);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ─── Animated Gradient Background ─── */
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #1a0011 0%, #2d0a1e 25%, #0d001a 50%, #1a0011 75%, #2d0a1e 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      z-index: -3;
+    }
+
+    @keyframes gradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* ─── Particle Canvas ─── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* ─── Floating Hearts CSS ─── */
+    .hearts-container {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .heart-float {
+      position: absolute;
+      bottom: -60px;
+      font-size: 1.5rem;
+      opacity: 0;
+      animation: heartRise linear infinite;
+    }
+
+    @keyframes heartRise {
+      0% {
+        transform: translateY(0) rotate(0deg) scale(0.5);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.7;
+      }
+
+      90% {
+        opacity: 0.3;
+      }
+
+      100% {
+        transform: translateY(-110vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* ─── Loading Screen ─── */
+    .loader {
+      position: fixed;
+      inset: 0;
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-heart {
+      font-size: 4rem;
+      animation: pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.3);
+      }
+    }
+
+    .loader-text {
+      margin-top: 20px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.5rem;
+      color: var(--rose);
+      letter-spacing: 2px;
+    }
+
+    /* ─── Main Container ─── */
+    .main {
+      opacity: 0;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ─── Hero Section ─── */
+    .hero {
+      text-align: center;
+      padding: 60px 20px 40px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 50px;
+      background: linear-gradient(135deg, var(--rose), #fd79a8);
+      font-size: 0.8rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 30px rgba(232, 67, 147, 0.4);
+    }
+
+    .hero h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      line-height: 1.1;
+      background: linear-gradient(135deg, #fff 0%, #ffc0cb 50%, #ff6b9d 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+      text-shadow: none;
+    }
+
+    .hero .subtitle {
+      font-size: 1.1rem;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 300;
+    }
+
+    .hero .name-highlight {
+      display: inline-block;
+      margin-top: 15px;
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: #ff6b9d;
+      position: relative;
+    }
+
+    .hero .name-highlight::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    }
+
+    /* ─── Photo Section ─── */
+    .photo-section {
+      display: flex;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
+    .photo-frame {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      padding: 4px;
+      background: linear-gradient(135deg, var(--rose), #fd79a8, #e17055, var(--rose));
+      background-size: 300% 300%;
+      animation: borderGlow 4s ease infinite;
+      box-shadow: 0 0 40px rgba(232, 67, 147, 0.3), 0 0 80px rgba(232, 67, 147, 0.1);
+    }
+
+    @keyframes borderGlow {
+
+      0%,
+      100% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--dark);
+    }
+
+    .photo-frame .sparkle {
+      position: absolute;
+      font-size: 1.2rem;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    .photo-frame .sparkle:nth-child(2) {
+      top: -5px;
+      right: 20px;
+      animation-delay: 0s;
+    }
+
+    .photo-frame .sparkle:nth-child(3) {
+      top: 20px;
+      right: -10px;
+      animation-delay: 0.5s;
+    }
+
+    .photo-frame .sparkle:nth-child(4) {
+      bottom: 10px;
+      right: -5px;
+      animation-delay: 1s;
+    }
+
+    .photo-frame .sparkle:nth-child(5) {
+      bottom: -5px;
+      left: 20px;
+      animation-delay: 1.5s;
+    }
+
+    .photo-frame .sparkle:nth-child(6) {
+      top: 10px;
+      left: -10px;
+      animation-delay: 0.7s;
+    }
+
+    @keyframes sparkle {
+
+      0%,
+      100% {
+        opacity: 0.3;
+        transform: scale(0.8);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.2);
+      }
+    }
+
+    /* ─── Message Cards ─── */
+    .message-card {
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 30px 25px;
+      margin-bottom: 25px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .message-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(232, 67, 147, 0.15);
+    }
+
+    .message-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -50%;
+      width: 200%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    }
+
+    .message-card .card-icon {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .message-card p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.85);
+      font-weight: 300;
+    }
+
+    .message-card .card-number {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 3rem;
+      color: rgba(232, 67, 147, 0.1);
+      font-weight: 700;
+    }
+
+    /* ─── Divider ─── */
+    .divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      margin: 30px 0;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 0.9rem;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232, 67, 147, 0.3), transparent);
+    }
+
+    /* ─── Footer ─── */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .footer .big-heart {
+      font-size: 3rem;
+      animation: pulse 2s ease-in-out infinite;
+      display: block;
+      margin-bottom: 15px;
+    }
+
+    .footer h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      color: var(--rose);
+      margin-bottom: 8px;
+    }
+
+    .footer .credit {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 20px;
+      letter-spacing: 1px;
+    }
+
+    /* ─── Replay Button ─── */
+    .replay-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 12px 30px;
+      border: 1px solid var(--glass-border);
+      border-radius: 50px;
+      background: var(--card-bg);
+      backdrop-filter: blur(10px);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+    }
+
+    .replay-btn:hover {
+      background: var(--rose);
+      border-color: var(--rose);
+      box-shadow: 0 4px 30px rgba(232, 67, 147, 0.4);
+      transform: scale(1.05);
+    }
+
+    /* ─── Music Toggle ─── */
+    .music-toggle {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--card-bg);
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+      font-size: 1.3rem;
+    }
+
+    .music-toggle:hover {
+      background: var(--rose);
+      box-shadow: 0 0 20px rgba(232, 67, 147, 0.4);
+    }
+
+    .music-toggle .bars {
+      display: flex;
+      gap: 2px;
+      align-items: flex-end;
+      height: 18px;
+    }
+
+    .music-toggle .bar {
+      width: 3px;
+      background: #fff;
+      border-radius: 2px;
+      transition: height 0.3s ease;
+    }
+
+    .music-toggle.playing .bar {
+      animation: musicBar 0.8s ease-in-out infinite;
+    }
+
+    .music-toggle.playing .bar:nth-child(1) {
+      animation-delay: 0.0s;
+    }
+
+    .music-toggle.playing .bar:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .music-toggle.playing .bar:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .music-toggle.playing .bar:nth-child(4) {
+      animation-delay: 0.1s;
+    }
+
+    .music-toggle:not(.playing) .bar {
+      height: 4px !important;
+    }
+
+    @keyframes musicBar {
+
+      0%,
+      100% {
+        height: 4px;
+      }
+
+      50% {
+        height: 18px;
+      }
+    }
+
+    /* ─── Scroll Indicator ─── */
+    .scroll-indicator {
+      text-align: center;
+      margin-top: 30px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    .scroll-indicator span {
+      display: block;
+      font-size: 0.75rem;
+      color: rgba(255, 255, 255, 0.3);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .scroll-arrow {
+      font-size: 1.5rem;
+      color: rgba(255, 255, 255, 0.3);
+    }
+
+    @keyframes bounce {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(8px);
+      }
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 600px) {
+      .hero {
+        padding: 40px 15px 30px;
+      }
+
+      .photo-frame {
+        width: 160px;
+        height: 160px;
+      }
+
+      .message-card {
+        padding: 22px 18px;
+      }
+
+      .message-card p {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Background -->
+  <div class="bg-gradient"></div>
+  <canvas id="particles"></canvas>
+
+  <!-- Floating Hearts -->
+  <div class="hearts-container" id="heartsContainer"></div>
+
+  <!-- Loading Screen -->
+  <div class="loader" id="loader">
+    <div class="loader-heart">💝</div>
+    <div class="loader-text">Preparing something special...</div>
+  </div>
+
+  <!-- Music -->
+  <audio id="bgMusic" loop>
+    <source src="music/song.mpeg" type="audio/mpeg">
+  </audio>
+
+  <!-- Music Toggle -->
+  <button class="music-toggle" id="musicToggle" title="Toggle Music">
+    <div class="bars">
+      <div class="bar" style="height:4px"></div>
+      <div class="bar" style="height:4px"></div>
+      <div class="bar" style="height:4px"></div>
+      <div class="bar" style="height:4px"></div>
+    </div>
+  </button>
+
+  <!-- Main Content -->
+  <div class="main" id="mainContent">
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">✦ 14 FEBRUARY ✦</div>
+      <h1>Happy Valentine's Day</h1>
+      <p class="subtitle">a little letter from heart</p>
+      <div class="name-highlight"><span id="recipientName">...</span> 💕</div>
+      <div class="scroll-indicator">
+        <span>scroll down</span>
+        <div class="scroll-arrow">↓</div>
+      </div>
+    </section>
+
+    <!-- Photo -->
+    <section class="photo-section">
+      <div class="photo-frame">
+        <img src="img/2.png" alt="bunga" />
+        <span class="sparkle">✨</span>
+        <span class="sparkle">✨</span>
+        <span class="sparkle">✨</span>
+        <span class="sparkle">✨</span>
+        <span class="sparkle">✨</span>
+      </div>
+    </section>
+
+    <div class="divider">💌</div>
+
+    <!-- Messages -->
+    <div class="message-card" data-aos>
+      <span class="card-number">01</span>
+      <span class="card-icon">🌸</span>
+      <p>Hai <span class="dynamic-name">...</span>! Terima kasih ya udah hadir di hidupku 😊 Kamu tau gak, dari pertama
+        kali kita kenal lewat ajak konten bareng itu, aku udah ngerasa ada sesuatu yang beda. Sebenarnya ada hal yang
+        udah lama aku pendam, dan hari ini aku memberanikan diri untuk mengungkapkannya. Kalau ternyata kamu nggak
+        merasakan hal yang sama, aku paham kok, yang penting kamu tau perasaan ini tulus dari hati.</p>
+    </div>
+
+    <div class="message-card" data-aos>
+      <span class="card-number">02</span>
+      <span class="card-icon">💭</span>
+      <p>Mungkin kamu nggak sadar, tapi setiap kali aku ngirim chat, aku selalu nungguin balasanmu dengan jantung yang
+        deg-degan 💓 Aku buka tutup chat berkali-kali, berharap ada notif dari kamu. Aku tau mungkin kamu sibuk, dan aku
+        nggak pernah mau maksa. Tapi jujur, setiap kali kamu bales.. sekecil apapun itu, rasanya duniaku langsung cerah
+        lagi ✨</p>
+    </div>
+
+    <div class="message-card" data-aos>
+      <span class="card-number">03</span>
+      <span class="card-icon">💗</span>
+      <p>Iya, aku punya perasaan lebih ke kamu, <span class="dynamic-name">...</span>.. Tapi tenang, aku tau batasannya
+        kok. Aku nggak akan memaksamu untuk merasakan hal yang sama. Kalaupun kita hanya ditakdirkan jadi teman, aku
+        tetap bersyukur punya seseorang sepertimu dalam hidupku. Karena kehadiranmu aja udah lebih dari cukup buat bikin
+        hariku lebih bewarna 🌈</p>
+    </div>
+
+    <div class="message-card" data-aos>
+      <span class="card-number">04</span>
+      <span class="card-icon">🎁</span>
+      <p>Maaf ya <span class="dynamic-name">...</span>, aku cuma bisa kasih ini — sebuah halaman kecil yang kubuat
+        dengan sepenuh hati, karena di bidang inilah aku bisa mengekspresikan perasaanku. Semoga kamu suka ya 🥺 Dan
+        apapun yang terjadi, jangan pernah menyerah! Kamu jauh lebih kuat dari yang kamu kira, dan aku akan selalu ada
+        mendukungmu dari sini 🔥💪</p>
+    </div>
+
+    <div class="divider">♡</div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <span class="big-heart">💝</span>
+      <h3>Selamat Hari Valentine!</h3>
+      <p style="color:rgba(255,255,255,0.5); font-size:0.95rem;">Semoga harimu indah selalu ✨</p>
+      <button class="replay-btn" id="replayBtn">
+        <span>🔄</span> Putar Ulang
+      </button>
+      <p class="credit">Made with 💖 by @yogakokxd</p>
+    </div>
+  </div>
+
+  <!-- GSAP & SweetAlert2 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script>
+    // ─── Particle System ───
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.3;
+        this.speedY = (Math.random() - 0.5) * 0.3;
+        this.opacity = Math.random() * 0.5 + 0.1;
+        this.pulse = Math.random() * Math.PI * 2;
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        this.pulse += 0.02;
+        this.currentOpacity = this.opacity + Math.sin(this.pulse) * 0.15;
+        if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+          this.reset();
+        }
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(232, 67, 147, ${this.currentOpacity})`;
+        ctx.fill();
+      }
+    }
+
+    for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+
+      // Draw connecting lines
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(232, 67, 147, ${0.05 * (1 - dist / 120)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // ─── Floating Hearts ───
+    const heartsContainer = document.getElementById('heartsContainer');
+    const heartEmojis = ['💕', '💗', '💖', '💝', '♡', '❤️', '🩷', '🤍'];
+
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart-float';
+      heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.fontSize = (Math.random() * 1.5 + 0.8) + 'rem';
+      heart.style.animationDuration = (Math.random() * 6 + 6) + 's';
+      heart.style.animationDelay = (Math.random() * 2) + 's';
+      heartsContainer.appendChild(heart);
+      setTimeout(() => heart.remove(), 14000);
+    }
+    setInterval(createHeart, 800);
+
+    // ─── Music Toggle ───
+    const music = document.getElementById('bgMusic');
+    const musicToggle = document.getElementById('musicToggle');
+    let isPlaying = false;
+
+    musicToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        music.pause();
+        musicToggle.classList.remove('playing');
+      } else {
+        music.play();
+        musicToggle.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // ─── Set Name Everywhere ───
+    function setRecipientName(name) {
+      document.getElementById('recipientName').textContent = name;
+      document.querySelectorAll('.dynamic-name').forEach(el => {
+        el.textContent = name;
+      });
+      // Also update the page title
+      document.title = `💝 Happy Valentine's Day, ${name}!`;
+    }
+
+    // ─── Get Name from URL ───
+    function getNameFromURL() {
+      // Support ?name=X or ?nama=X format
+      const urlParams = new URLSearchParams(window.location.search);
+      const qName = urlParams.get('name') || urlParams.get('nama');
+      if (qName) return qName.trim();
+
+      // Support /name=X or /nama=X format (path-based)
+      const pathMatch = window.location.pathname.match(/\/(?:name|nama)=([^\/&?]+)/);
+      if (pathMatch) return decodeURIComponent(pathMatch[1]).trim();
+
+      // Support #name=X or #nama=X format (hash-based)
+      const hashMatch = window.location.hash.match(/(?:name|nama)=([^&]+)/);
+      if (hashMatch) return decodeURIComponent(hashMatch[1]).trim();
+
+      return null;
+    }
+
+    // ─── Music Prompt ───
+    function showMusicPrompt() {
+      return Swal.fire({
+        title: '🎵 Mau sambil dengerin lagu?',
+        html: '<p style="color:#888;font-size:0.9rem;">Biar makin berasa vibes-nya~</p>',
+        icon: 'question',
+        background: '#1a0011',
+        color: '#fff',
+        showCancelButton: true,
+        confirmButtonText: '🎶 Yaiii!',
+        cancelButtonText: '⏭️ Skip dulu',
+        confirmButtonColor: '#e84393',
+        cancelButtonColor: '#555',
+        customClass: { popup: 'swal-dark' }
+      }).then((musicResult) => {
+        if (musicResult.isConfirmed) {
+          music.play();
+          isPlaying = true;
+          musicToggle.classList.add('playing');
+        }
+        document.getElementById('loader').classList.add('hide');
+        startReveal();
+      });
+    }
+
+    // ─── Apply Custom Messages from URL ───
+    function applyCustomMessages(nama) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const pesanParam = urlParams.get('pesan');
+      if (!pesanParam) return;
+
+      try {
+        const json = decodeURIComponent(escape(atob(pesanParam)));
+        const data = JSON.parse(json);
+        const cards = document.querySelectorAll('.message-card p');
+
+        const msgs = [data.p1, data.p2, data.p3, data.p4];
+        cards.forEach((card, i) => {
+          if (msgs[i]) {
+            // Replace {nama} placeholder with actual name
+            card.textContent = msgs[i].replace(/\{nama\}/gi, nama);
+          }
+        });
+      } catch (e) {
+        console.warn('Failed to decode custom messages:', e);
+      }
+    }
+
+    // ─── Main Flow ───
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const urlName = getNameFromURL();
+
+        if (urlName) {
+          // Name from URL → skip name alert, go straight to music
+          setRecipientName(urlName);
+          applyCustomMessages(urlName);
+          showMusicPrompt();
+        } else {
+          // No name in URL → ask for name first
+          Swal.fire({
+            title: '💌 Surat ini untuk siapa?',
+            html: '<p style="color:#999;font-size:0.85rem;margin-bottom:8px;">Tulis nama orang spesialmu di sini~</p>',
+            input: 'text',
+            inputPlaceholder: 'Ketik namanya...',
+            inputAttributes: { autocomplete: 'off' },
+            background: '#1a0011',
+            color: '#fff',
+            confirmButtonText: '💝 Lanjut',
+            confirmButtonColor: '#e84393',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            inputValidator: (value) => {
+              if (!value || !value.trim()) return 'Eitss, namanya jangan kosong dong~ 😄';
+            },
+            customClass: { input: 'swal-name-input', popup: 'swal-dark' }
+          }).then((nameResult) => {
+            setRecipientName(nameResult.value.trim());
+            showMusicPrompt();
+          });
+        }
+      }, 1500);
+    });
+
+    // ─── GSAP Animations ───
+    function startReveal() {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const tl = gsap.timeline();
+
+      tl.to('#mainContent', { duration: 0.5, opacity: 1 })
+        .from('.hero-badge', { duration: 0.8, y: -30, opacity: 0, ease: 'back.out(1.7)' })
+        .from('.hero h1', { duration: 1.2, y: 40, opacity: 0, ease: 'power3.out' }, '-=0.4')
+        .from('.hero .subtitle', { duration: 0.8, y: 20, opacity: 0 }, '-=0.5')
+        .from('.hero .name-highlight', { duration: 1, scale: 0.5, opacity: 0, ease: 'elastic.out(1, 0.5)' }, '-=0.3')
+        .from('.scroll-indicator', { duration: 0.6, opacity: 0, y: 10 }, '-=0.2')
+        .from('.photo-frame', { duration: 1.2, scale: 0, opacity: 0, rotation: 360, ease: 'back.out(1.7)' }, '-=0.3');
+
+      // Scroll-triggered message cards
+      document.querySelectorAll('.message-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: 'top 85%',
+            toggleActions: 'play none none none'
+          },
+          duration: 0.8,
+          y: 60,
+          opacity: 0,
+          ease: 'power3.out',
+          delay: i * 0.1
+        });
+      });
+
+      // Footer animation
+      gsap.from('.footer', {
+        scrollTrigger: {
+          trigger: '.footer',
+          start: 'top 85%'
+        },
+        duration: 1,
+        y: 40,
+        opacity: 0,
+        ease: 'power3.out'
+      });
+
+      // Replay
+      document.getElementById('replayBtn').addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          tl.restart();
+        }, 500);
+      });
+    }
+  </script>
+</body>
+
+</html>

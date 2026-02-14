@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>✏️ Valentine Editor</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Outfit:wght@300;400;600&display=swap"
+		rel="stylesheet">
+	<style>
+		*,
+		*::before,
+		*::after {
+			box-sizing: border-box;
+			margin: 0;
+			padding: 0;
+		}
+
+		:root {
+			--rose: #e84393;
+			--dark: #1a0011;
+			--card-bg: rgba(255, 255, 255, 0.06);
+			--glass-border: rgba(255, 255, 255, 0.12);
+		}
+
+		body {
+			font-family: 'Outfit', sans-serif;
+			background: var(--dark);
+			color: #fff;
+			min-height: 100vh;
+			overflow-x: hidden;
+		}
+
+		.bg {
+			position: fixed;
+			inset: 0;
+			background: linear-gradient(135deg, #1a0011 0%, #2d0a1e 30%, #0d001a 60%, #1a0011 100%);
+			background-size: 400% 400%;
+			animation: bg 15s ease infinite;
+			z-index: -1;
+		}
+
+		@keyframes bg {
+			0% {
+				background-position: 0% 50%
+			}
+
+			50% {
+				background-position: 100% 50%
+			}
+
+			100% {
+				background-position: 0% 50%
+			}
+		}
+
+		.container {
+			max-width: 700px;
+			margin: 0 auto;
+			padding: 40px 20px 80px;
+		}
+
+		/* Header */
+		.editor-header {
+			text-align: center;
+			margin-bottom: 40px;
+		}
+
+		.editor-header h1 {
+			font-family: 'Dancing Script', cursive;
+			font-size: 2.5rem;
+			background: linear-gradient(135deg, #fff, #ff6b9d);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			margin-bottom: 8px;
+		}
+
+		.editor-header p {
+			color: rgba(255, 255, 255, 0.5);
+			font-size: 0.9rem;
+		}
+
+		/* Form Groups */
+		.form-group {
+			margin-bottom: 24px;
+		}
+
+		.form-group label {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			font-size: 0.9rem;
+			font-weight: 600;
+			margin-bottom: 8px;
+			color: rgba(255, 255, 255, 0.8);
+		}
+
+		.form-group label .badge {
+			display: inline-block;
+			padding: 2px 10px;
+			border-radius: 20px;
+			font-size: 0.7rem;
+			font-weight: 400;
+			background: rgba(232, 67, 147, 0.2);
+			color: var(--rose);
+			border: 1px solid rgba(232, 67, 147, 0.3);
+		}
+
+		.form-group input,
+		.form-group textarea {
+			width: 100%;
+			padding: 14px 16px;
+			border-radius: 12px;
+			border: 1px solid var(--glass-border);
+			background: var(--card-bg);
+			color: #fff;
+			font-family: 'Outfit', sans-serif;
+			font-size: 0.95rem;
+			outline: none;
+			transition: border-color 0.3s, box-shadow 0.3s;
+			backdrop-filter: blur(10px);
+		}
+
+		.form-group input::placeholder,
+		.form-group textarea::placeholder {
+			color: rgba(255, 255, 255, 0.3);
+		}
+
+		.form-group input:focus,
+		.form-group textarea:focus {
+			border-color: var(--rose);
+			box-shadow: 0 0 20px rgba(232, 67, 147, 0.15);
+		}
+
+		.form-group textarea {
+			min-height: 100px;
+			resize: vertical;
+			line-height: 1.7;
+		}
+
+		/* Card wrapper */
+		.card-section {
+			background: var(--card-bg);
+			border: 1px solid var(--glass-border);
+			border-radius: 16px;
+			padding: 24px 20px;
+			margin-bottom: 20px;
+			backdrop-filter: blur(10px);
+			position: relative;
+		}
+
+		.card-section .card-num {
+			position: absolute;
+			top: 12px;
+			right: 16px;
+			font-family: 'Dancing Script', cursive;
+			font-size: 2rem;
+			color: rgba(232, 67, 147, 0.15);
+			font-weight: 700;
+		}
+
+		.card-section h3 {
+			font-size: 1rem;
+			margin-bottom: 12px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		/* Divider */
+		.divider {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 12px;
+			margin: 30px 0;
+			color: rgba(255, 255, 255, 0.15);
+			font-size: 0.85rem;
+		}
+
+		.divider::before,
+		.divider::after {
+			content: '';
+			flex: 1;
+			height: 1px;
+			background: linear-gradient(90deg, transparent, rgba(232, 67, 147, 0.2), transparent);
+		}
+
+		/* Buttons */
+		.btn-row {
+			display: flex;
+			gap: 12px;
+			margin-top: 30px;
+		}
+
+		.btn {
+			flex: 1;
+			padding: 14px 24px;
+			border-radius: 12px;
+			border: none;
+			font-family: 'Outfit', sans-serif;
+			font-size: 1rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: all 0.3s;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			gap: 8px;
+		}
+
+		.btn-primary {
+			background: linear-gradient(135deg, var(--rose), #fd79a8);
+			color: #fff;
+			box-shadow: 0 4px 20px rgba(232, 67, 147, 0.3);
+		}
+
+		.btn-primary:hover {
+			transform: translateY(-2px);
+			box-shadow: 0 8px 30px rgba(232, 67, 147, 0.5);
+		}
+
+		.btn-secondary {
+			background: var(--card-bg);
+			color: rgba(255, 255, 255, 0.7);
+			border: 1px solid var(--glass-border);
+		}
+
+		.btn-secondary:hover {
+			border-color: var(--rose);
+			color: #fff;
+		}
+
+		/* Result Box */
+		.result-box {
+			display: none;
+			margin-top: 24px;
+			background: var(--card-bg);
+			border: 1px solid rgba(232, 67, 147, 0.3);
+			border-radius: 16px;
+			padding: 24px 20px;
+			backdrop-filter: blur(10px);
+			animation: fadeIn 0.4s ease;
+		}
+
+		.result-box.show {
+			display: block;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translateY(10px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translateY(0);
+			}
+		}
+
+		.result-box h3 {
+			font-size: 1rem;
+			margin-bottom: 12px;
+			display: flex;
+			align-items: center;
+			gap: 8px;
+		}
+
+		.result-link {
+			width: 100%;
+			padding: 12px 14px;
+			border-radius: 10px;
+			border: 1px solid var(--glass-border);
+			background: rgba(0, 0, 0, 0.3);
+			color: #ff6b9d;
+			font-family: 'Outfit', sans-serif;
+			font-size: 0.85rem;
+			word-break: break-all;
+			outline: none;
+			cursor: text;
+		}
+
+		.copy-msg {
+			margin-top: 8px;
+			font-size: 0.8rem;
+			color: #27ae60;
+			opacity: 0;
+			transition: opacity 0.3s;
+		}
+
+		.copy-msg.show {
+			opacity: 1;
+		}
+
+		/* Toast */
+		.toast {
+			position: fixed;
+			bottom: 30px;
+			left: 50%;
+			transform: translateX(-50%) translateY(20px);
+			padding: 12px 24px;
+			border-radius: 12px;
+			background: rgba(39, 174, 96, 0.9);
+			color: #fff;
+			font-size: 0.9rem;
+			backdrop-filter: blur(10px);
+			opacity: 0;
+			transition: all 0.4s ease;
+			z-index: 100;
+			pointer-events: none;
+		}
+
+		.toast.show {
+			opacity: 1;
+			transform: translateX(-50%) translateY(0);
+		}
+
+		/* Responsive */
+		@media (max-width: 500px) {
+			.container {
+				padding: 20px 15px 60px;
+			}
+
+			.editor-header h1 {
+				font-size: 2rem;
+			}
+
+			.btn-row {
+				flex-direction: column;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="bg"></div>
+
+	<div class="container">
+		<div class="editor-header">
+			<h1>💌 Valentine Editor</h1>
+			<p>Buat pesan Valentine custom dan bagikan ke orang spesialmu~</p>
+		</div>
+
+		<!-- Name -->
+		<div class="form-group">
+			<label>💕 Nama Penerima <span class="badge">wajib</span></label>
+			<input type="text" id="inputNama" placeholder="Contoh: Yoga" autocomplete="off" />
+		</div>
+
+		<div class="divider">pesan-pesan</div>
+
+		<!-- Message 1 -->
+		<div class="card-section">
+			<span class="card-num">01</span>
+			<h3>🌸 Pesan Pertama</h3>
+			<div class="form-group">
+				<textarea id="msg1"
+					placeholder="Tulis pesan pertama kamu di sini...">Hai {nama}! Terima kasih ya udah hadir di hidupku 😊 Kamu tau gak, dari pertama kali kita kenal lewat ajak konten bareng itu, aku udah ngerasa ada sesuatu yang beda. Sebenarnya ada hal yang udah lama aku pendam, dan hari ini aku memberanikan diri untuk mengungkapkannya. Kalau ternyata kamu nggak merasakan hal yang sama, aku paham kok, yang penting kamu tau perasaan ini tulus dari hati.</textarea>
+			</div>
+		</div>
+
+		<!-- Message 2 -->
+		<div class="card-section">
+			<span class="card-num">02</span>
+			<h3>💭 Pesan Kedua</h3>
+			<div class="form-group">
+				<textarea id="msg2"
+					placeholder="Tulis pesan kedua kamu di sini...">Mungkin kamu nggak sadar, tapi setiap kali aku ngirim chat, aku selalu nungguin balasanmu dengan jantung yang deg-degan 💓 Aku buka tutup chat berkali-kali, berharap ada notif dari kamu. Aku tau mungkin kamu sibuk, dan aku nggak pernah mau maksa. Tapi jujur, setiap kali kamu bales.. sekecil apapun itu, rasanya duniaku langsung cerah lagi ✨</textarea>
+			</div>
+		</div>
+
+		<!-- Message 3 -->
+		<div class="card-section">
+			<span class="card-num">03</span>
+			<h3>💗 Pesan Ketiga</h3>
+			<div class="form-group">
+				<textarea id="msg3"
+					placeholder="Tulis pesan ketiga kamu di sini...">Iya, aku punya perasaan lebih ke kamu, {nama}.. Tapi tenang, aku tau batasannya kok. Aku nggak akan memaksamu untuk merasakan hal yang sama. Kalaupun kita hanya ditakdirkan jadi teman, aku tetap bersyukur punya seseorang sepertimu dalam hidupku. Karena kehadiranmu aja udah lebih dari cukup buat bikin hariku lebih bewarna 🌈</textarea>
+			</div>
+		</div>
+
+		<!-- Message 4 -->
+		<div class="card-section">
+			<span class="card-num">04</span>
+			<h3>🎁 Pesan Terakhir</h3>
+			<div class="form-group">
+				<textarea id="msg4"
+					placeholder="Tulis pesan terakhir kamu di sini...">Maaf ya {nama}, aku cuma bisa kasih ini — sebuah halaman kecil yang kubuat dengan sepenuh hati, karena di bidang inilah aku bisa mengekspresikan perasaanku. Semoga kamu suka ya 🥺 Dan apapun yang terjadi, jangan pernah menyerah! Kamu jauh lebih kuat dari yang kamu kira, dan aku akan selalu ada mendukungmu dari sini 🔥💪</textarea>
+			</div>
+		</div>
+
+		<p style="color:rgba(255,255,255,0.35); font-size:0.8rem; text-align:center; margin-top:8px;">
+			💡 Gunakan <strong>{nama}</strong> di pesan untuk otomatis diganti nama penerima
+		</p>
+
+		<!-- Action buttons -->
+		<div class="btn-row">
+			<button class="btn btn-secondary" id="previewBtn">👁️ Preview</button>
+			<button class="btn btn-primary" id="generateBtn">🔗 Generate Link</button>
+		</div>
+
+		<!-- Result -->
+		<div class="result-box" id="resultBox">
+			<h3>✅ Link Berhasil Dibuat!</h3>
+			<input type="text" class="result-link" id="resultLink" readonly />
+			<div style="display:flex; gap:10px; margin-top:12px;">
+				<button class="btn btn-primary" id="copyBtn" style="flex:1; padding:10px;">📋 Copy Link</button>
+				<button class="btn btn-secondary" id="openBtn" style="flex:1; padding:10px;">🔗 Buka Link</button>
+			</div>
+			<p class="copy-msg" id="copyMsg">✅ Link berhasil disalin!</p>
+		</div>
+	</div>
+
+	<!-- Toast -->
+	<div class="toast" id="toast"></div>
+
+	<script>
+		// ─── Encode/Decode ───
+		function encodeData(data) {
+			const json = JSON.stringify(data);
+			// Use btoa with Unicode support
+			const encoded = btoa(unescape(encodeURIComponent(json)));
+			return encoded;
+		}
+
+		function getBaseURL() {
+			// Remove /edit or /edit/ from current path to get the root
+			const loc = window.location;
+			let base = loc.origin + loc.pathname;
+			// Handle "null" origin for file:// protocol
+			if (base.startsWith('null')) base = 'file://' + loc.pathname;
+			base = base.replace(/\/edit\/?.*$/, '/');
+			if (!base.endsWith('/')) base += '/';
+			return base + 'index.html';
+		}
+
+		function showToast(msg) {
+			const toast = document.getElementById('toast');
+			toast.textContent = msg;
+			toast.classList.add('show');
+			setTimeout(() => toast.classList.remove('show'), 2500);
+		}
+
+		function validate() {
+			const nama = document.getElementById('inputNama').value.trim();
+			if (!nama) {
+				showToast('⚠️ Nama penerima harus diisi!');
+				document.getElementById('inputNama').focus();
+				return null;
+			}
+			return {
+				nama: nama,
+				p1: document.getElementById('msg1').value.trim(),
+				p2: document.getElementById('msg2').value.trim(),
+				p3: document.getElementById('msg3').value.trim(),
+				p4: document.getElementById('msg4').value.trim()
+			};
+		}
+
+		// ─── Generate Link ───
+		document.getElementById('generateBtn').addEventListener('click', () => {
+			const data = validate();
+			if (!data) return;
+
+			const encoded = encodeData({
+				p1: data.p1,
+				p2: data.p2,
+				p3: data.p3,
+				p4: data.p4
+			});
+
+			const url = getBaseURL() + '?nama=' + encodeURIComponent(data.nama) + '&pesan=' + encodeURIComponent(encoded);
+
+			const resultBox = document.getElementById('resultBox');
+			const resultLink = document.getElementById('resultLink');
+			resultLink.value = url;
+			resultBox.classList.add('show');
+			resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		});
+
+		// ─── Copy ───
+		document.getElementById('copyBtn').addEventListener('click', () => {
+			const link = document.getElementById('resultLink').value;
+			navigator.clipboard.writeText(link).then(() => {
+				const msg = document.getElementById('copyMsg');
+				msg.classList.add('show');
+				showToast('📋 Link disalin ke clipboard!');
+				setTimeout(() => msg.classList.remove('show'), 3000);
+			});
+		});
+
+		// ─── Open ───
+		document.getElementById('openBtn').addEventListener('click', () => {
+			const link = document.getElementById('resultLink').value;
+			if (link) window.open(link, '_blank');
+		});
+
+		// ─── Preview ───
+		document.getElementById('previewBtn').addEventListener('click', () => {
+			const data = validate();
+			if (!data) return;
+
+			const encoded = encodeData({
+				p1: data.p1,
+				p2: data.p2,
+				p3: data.p3,
+				p4: data.p4
+			});
+
+			const url = getBaseURL() + '?nama=' + encodeURIComponent(data.nama) + '&pesan=' + encodeURIComponent(encoded);
+			window.open(url, '_blank');
+		});
+	</script>
+</body>
+
+</html>
